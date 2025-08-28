@@ -43,20 +43,40 @@ public class S3ProjectAwsSdkApplication implements CommandLineRunner {
             int choice = Integer.parseInt(scanner.nextLine());
             switch (choice) {
                 case 1:
-                    System.out.println("Nu listas alla filer");
+                    System.out.println("List all files in the bucket:");
                     List<String> files = s3service.listAllFiles(bucketName);
                     files.forEach(System.out::println);
-
-                    // lists alla filer  som heter "chandrikakarri-s3demoproject"
                     break;
                 case 2:
-                    System.out.println("Vilken fil vill du ladda upp");
+                    System.out.println("Enter the file path to upload:");
+                    String filePath = scanner.nextLine();
+                    String uploadedFileName = s3service.uploadFiles(bucketName, filePath);
+                    if (uploadedFileName != null) {
+                        System.out.println("File uploaded successfully: " + uploadedFileName);
+                    } else {
+                        System.out.println("File upload failed.");
+                    }
                     break;
                 case 3:
-                    System.out.println("Vilken fil vill du ladda ner fil");
+                    System.out.println("Which file do you want to download?");
+                    String fileName = scanner.nextLine();
+                    System.out.println("Downloading filepath: ");
+                    String downloadPath = scanner.nextLine();
+                    boolean downloadSuccess = s3service.downloadFile(bucketName, fileName, downloadPath);
+                    if (downloadSuccess) {
+                        System.out.println("File downloaded successfully to: " + downloadPath);
+                    } else {
+                        System.out.println("File download failed.");
+                    }
                     break;
                 case 4:
+                    System.out.println("Exiting...");
+                    scanner.close();
                     return;
+
+                default:
+                    System.out.println("Invalid choice. Please try again.");
+                    break;
             }
         }
     }
