@@ -15,6 +15,6 @@ phases:
 
 artifacts:
   files:
-    - target/*.jar
+    - '*.jar'
   discard-paths: yes
   base-directory: target
