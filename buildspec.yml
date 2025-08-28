@@ -18,3 +18,4 @@ artifacts:
     - '*.jar'
   discard-paths: yes
   base-directory: target
+  name: builds/S3Project.jar
